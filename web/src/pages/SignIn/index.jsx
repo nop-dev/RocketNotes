@@ -1,12 +1,17 @@
 import { Container, Form, Background } from './styles';
 import { FiMail, FiLock } from 'react-icons/fi';
 
+import { useAuth } from '../../hooks/auth';
+
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 import { ButtonText } from '../../components/ButtonText'
 import { Link } from 'react-router-dom';
 
 export function SignIn() {
+    const data = useAuth()
+    console.log(data)
+
     return(
         <Container>
             <Form>
