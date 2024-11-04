@@ -1,23 +1,25 @@
-import { Container, Profile, Logout } from "./styles";
 import { RiShutDownLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Container, Logout, Profile } from "./styles";
+
+import { useAuth } from "../../hooks/auth";
 
 export function Header() {
-    return(
-        <Container>
-            <Profile to={"/profile"}>
-                <img src="https://github.com/nop-dev.png" alt="Foto do User" />
-            
+	const { signOut } = useAuth();
 
-                <div id="identify">
-                    <span>Bem vindo!</span>
-                    <strong>Nop-Dev</strong>
-                </div>
-            </Profile>
+	return (
+		<Container>
+			<Profile to={"/profile"}>
+				<img src="https://github.com/nop-dev.png" alt="Foto do User" />
 
-            <Logout>
-                <RiShutDownLine />
-            </Logout>
-        </Container>
-    )
+				<div id="identify">
+					<span>Bem vindo!</span>
+					<strong>Nop-Dev</strong>
+				</div>
+			</Profile>
+
+			<Logout onClick={signOut}>
+				<RiShutDownLine />
+			</Logout>
+		</Container>
+	);
 }
