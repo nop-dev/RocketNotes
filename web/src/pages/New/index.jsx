@@ -1,48 +1,64 @@
+import { useState } from "react";
 import { Container, Form } from "./styles";
 
-import { Header } from "../../components/Header"
-import { Input } from "../../components/Input"
-import { Button } from "../../components/Button"
-import { Textarea } from "../../components/Textarea"
-import { NoteItem } from "../../components/NoteItem"
-import { Section } from "../../components/Section"
 import { Link } from "react-router-dom";
+import { Button } from "../../components/Button";
+import { Header } from "../../components/Header";
+import { Input } from "../../components/Input";
+import { NoteItem } from "../../components/NoteItem";
+import { Section } from "../../components/Section";
+import { Textarea } from "../../components/Textarea";
 
 export function New() {
-    return(
-        <Container>
-            <Header />
+	const [links, setLinks] = useState([]);
+	const [newLink, setNewLink] = useState("");
 
-            <main>
-                <Form>
-                    <header>
-                        <h1>Criar Nota</h1>
-                        <Link to={"/"}>Voltar</Link>
-                    </header>
-                    
-                    <Input 
-                        placeholder="Título"
-                        type="text"
-                    />
+	function handleAddLink() {
+		setLinks((PrevState) => [...PrevState, newLink]);
+		setNewLink("");
+	}
 
-                    <Textarea placeholder="Observações" />
+	return (
+		<Container>
+			<Header />
 
-                    <Section title="Links úteis">
-                        <NoteItem value="https://rocketseat.com.br" />
-                        <NoteItem $isnew placeholder="Novo link" />
-                    </Section>
+			<main>
+				<Form>
+					<header>
+						<h1>Criar Nota</h1>
+						<Link to={"/"}>Voltar</Link>
+					</header>
 
-                    <Section title="Marcadores" className="tags">
-                        <div className="tags">
-                            <NoteItem value="react" />
-                            <NoteItem $isnew placeholder="Nova tag" />
-                        </div>
+					<Input placeholder="Título" type="text" />
+
+					<Textarea placeholder="Observações" />
+
+					<Section title="Links úteis">
+						{
+                            links.map((link, index) => (
+                                <NoteItem key={String(index)} value={link} onClick={() => {}} />
+                            ))
+                        }
                         
-                    </Section>
+						<NoteItem
+							$isnew
+							value={newLink}
+							placeholder="Novo link"
+							onChange={(e) => setNewLink(e.target.value)}
+							onClick={handleAddLink}
+						/>
+					</Section>
 
-                    <Button title="Salvar"/>
-                </Form>
-            </main>
-        </Container>
-    )
+					<Section title="Marcadores" className="tags">
+						<div className="tags">
+							<NoteItem value="react" />
+							<NoteItem $isnew placeholder="Nova tag" />
+						</div>
+					</Section>
+
+					<Button title="Salvar" />
+				</Form>
+			</main>
+		</Container>
+	);
 }
