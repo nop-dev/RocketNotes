@@ -30,6 +30,10 @@ export function New() {
 		setNewTag("");
 	}
 
+	function handleRemoveTag(deleted) {
+		setTags((prevState) => prevState.filter((tag) => tag !== deleted));
+	}
+
 	return (
 		<Container>
 			<Header />
@@ -46,11 +50,13 @@ export function New() {
 					<Textarea placeholder="Observações" />
 
 					<Section title="Links úteis">
-						{
-								links.map((link, index) => (
-										<NoteItem key={String(index)} value={link} onClick={() => handleRemoveLink(link)} />
-								))
-						}
+						{links.map((link, index) => (
+							<NoteItem
+								key={String(index)}
+								value={link}
+								onClick={() => handleRemoveLink(link)}
+							/>
+						))}
 
 						<NoteItem
 							$isnew
@@ -63,18 +69,20 @@ export function New() {
 
 					<Section title="Marcadores" className="tags">
 						<div className="tags">
-							{
-								tags.map((tag, index) => (
-									<NoteItem value={tag}  key={String(index)} /* onClick={() => handleRemoveTag(tag)} */ />
-								))
-							}
+							{tags.map((tag, index) => (
+								<NoteItem
+									value={tag}
+									key={String(index)}
+									onClick={() => handleRemoveTag(tag)}
+								/>
+							))}
 
-							<NoteItem 
-								$isnew 
+							<NoteItem
+								$isnew
 								placeholder="Nova tag"
 								onChange={(e) => setNewTag(e.target.value)}
 								onClick={handleAddTag}
-								/>
+							/>
 						</div>
 					</Section>
 
