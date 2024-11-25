@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -43,6 +43,10 @@ export const Menu = styled.ul`
   flex-direction: column;
   align-items: center;
   gap: 14px;
+
+  > li {
+    list-style-type: none;
+  }
 `;
 
 export const Search = styled.div`

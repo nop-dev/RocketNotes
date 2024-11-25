@@ -1,50 +1,70 @@
-import { FiPlus, FiSearch } from 'react-icons/fi';
-import { Container, Brand, Menu, Search, Content, NewNote } from './styles'
+import { useEffect, useState } from "react";
+import { api } from "../../service/api";
 
-import { Header } from '../../components/Header'
-import { Section } from '../../components/Section'
-import { Note } from '../../components/Note';
-import { ButtonText } from '../../components/ButtonText'
-import { Input } from '../../components/Input';
+import { FiPlus, FiSearch } from "react-icons/fi";
+import { Brand, Container, Content, Menu, NewNote, Search } from "./styles";
+
+import { ButtonText } from "../../components/ButtonText";
+import { Header } from "../../components/Header";
+import { Input } from "../../components/Input";
+import { Note } from "../../components/Note";
+import { Section } from "../../components/Section";
 
 export function Home() {
-  return (
-    <Container>
-      <Brand>
-        <h1>Rocketnotes</h1>
-      </Brand>
+	const [tags, setTags] = useState([]);
 
-      <Header />
+	useEffect(() => {
+		async function fetchTags() {
+			const response = await api.get("/tags");
+			setTags(response.data);
+		}
 
-      <Menu>
-        <ButtonText title="Todos"   />
-        <ButtonText title="Front-End"/>
-        <ButtonText title="Node"/>
-        <ButtonText title="React"/>
-      </Menu>
+		fetchTags();
+	}, []);
+	return (
+		<Container>
+			<Brand>
+				<h1>Rocketnotes</h1>
+			</Brand>
 
-      <Search>
-        <Input placeholder="Pesquisar pelo título" icon={FiSearch} />
-      </Search>
+			<Header />
 
-      <Content>
-        <Section title="Minhas Notas">
+			<Menu>
+				<li>
+					<ButtonText title="Todos" />
+				</li>
 
-          <Note data = {{
-            title:  "React",
-            tags: [
-                    { id: 1, name: 'react'},
-                    { id: 2, name: 'js'}
-                  ]
-          }} />
+				{
+          tags.map(tag => (
+            <li key={String(tag.id)}>
+              <ButtonText title={tag.title} />
+            </li>
+          ))
+        }
+			</Menu>
 
-        </Section>
-      </Content>
+			<Search>
+				<Input placeholder="Pesquisar pelo título" icon={FiSearch} />
+			</Search>
 
-      <NewNote to={"/new"}>
-        <FiPlus />
-          Criar Nota
-      </NewNote>
-    </Container>
-  )
+			<Content>
+				<Section title="Minhas Notas">
+					<Note
+						data={{
+							title: "React",
+							tags: [
+								{ id: 1, name: "react" },
+								{ id: 2, name: "js" },
+							],
+						}}
+					/>
+				</Section>
+			</Content>
+
+			<NewNote to={"/new"}>
+				<FiPlus />
+				Criar Nota
+			</NewNote>
+		</Container>
+	);
 }
