@@ -12,6 +12,19 @@ import { Section } from "../../components/Section";
 
 export function Home() {
 	const [tags, setTags] = useState([]);
+	const [selectedTags, setSelectedTags] = useState([]);
+
+	function handleTagSelection(tagName) {
+		if (tagName === "all") {
+			setSelectedTags([]);
+		} else {
+			setSelectedTags((prev) =>
+				prev.includes(tagName)
+					? prev.filter((tag) => tag !== tagName)
+					: [...prev, tagName]
+			);
+		}
+	}
 
 	useEffect(() => {
 		async function fetchTags() {
@@ -21,6 +34,7 @@ export function Home() {
 
 		fetchTags();
 	}, []);
+
 	return (
 		<Container>
 			<Brand>
@@ -31,16 +45,22 @@ export function Home() {
 
 			<Menu>
 				<li>
-					<ButtonText title="Todos" />
+					<ButtonText
+						title="Todos"
+						onClick={() => handleTagSelection("all")}
+						$isactive={selectedTags.length === 0}
+					/>
 				</li>
 
-				{
-          tags.map(tag => (
-            <li key={String(tag.id)}>
-              <ButtonText title={tag.title} />
-            </li>
-          ))
-        }
+				{tags.map((tag) => (
+					<li key={String(tag.id)}>
+						<ButtonText
+							title={tag.title}
+							onClick={() => handleTagSelection(tag.title)}
+							$isactive={selectedTags.includes(tag.title)}
+						/>
+					</li>
+				))}
 			</Menu>
 
 			<Search>
