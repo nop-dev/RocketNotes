@@ -1,43 +1,76 @@
-import { Container, Links, Content } from "./styles";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Container, Content, Links } from "./styles";
+
+import { api } from "../../service/api";
 
 import { Button } from "../../components/Button";
+import { ButtonText } from "../../components/ButtonText";
 import { Header } from "../../components/Header";
 import { Section } from "../../components/Section";
 import { Tag } from "../../components/Tags";
-import { ButtonText } from "../../components/ButtonText";
-import { Link } from "react-router-dom";
 
 export function Details() {
+	const [data, setData] = useState("");
+	const params = useParams();
 
-  return(
-        <Container>
-            <Header />
+	const navigate = useNavigate();
 
-            <main>
-              <Content>
-                <ButtonText title="Excluir a nota" />
+	function handleBack() {
+    navigate("/")
+  }
 
-                <h1>Introdução ao React</h1>
+	useEffect(() => {
+		async function fetchNote() {
+			console.log(params.note_id);
+			const response = await api.get(`/notes/${params.note_id}`);
+			setData(response.data);
+		}
 
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-              
-                <Section title="Links Úteis">
-                  <Links>
-                      <li><a href="#">https://www.rocketseat.com.br/</a></li>
-                      <li><a href="#">https://www.rocketseat.com.br/</a></li>
-                  </Links>
-                </Section>
+		fetchNote();
+	}, []);
 
-                <Section title="Marcadores">
-                  <Tag title="express"/>
-                  <Tag title="nodejs"/>
-                </Section>
-                
-                <Link to={"/"}><Button title="Voltar" /></Link>
-              </Content>
-            </main>
-            
-            
-        </Container>    
-  );
-};
+	return (
+		<Container>
+			<Header />
+
+			{
+				<main>
+					<Content>
+						<ButtonText title="Excluir Nota" />
+
+						<h1>{data.title}</h1>
+
+						<p>{data.description}</p>
+
+						{data.links && (
+							<Section title="Links Úteis">
+								<Links>
+									{data.links.map((link) => (
+										<li key={String(link.id)}>
+											<a href={link.url} target="_blank" rel="noreferrer">
+												{link.url}
+											</a>
+										</li>
+									))}
+								</Links>
+							</Section>
+						)}
+
+						{data.tags && (
+							<Section title="Marcadores">
+								{data.tags.map((tag) => (
+									<Tag key={tag.id} title={tag.title} />
+								))}
+							</Section>
+						)}
+
+						<Link to={"/"}>
+							<Button title="Voltar" onClick={handleBack} />
+						</Link>
+					</Content>
+				</main>
+			}
+		</Container>
+	);
+}
