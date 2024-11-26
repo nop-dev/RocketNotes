@@ -11,18 +11,21 @@ import { Note } from "../../components/Note";
 import { Section } from "../../components/Section";
 
 export function Home() {
+	const [search, setSearch] = useState("");
+
 	const [tags, setTags] = useState([]);
 	const [selectedTags, setSelectedTags] = useState([]);
 
+	const [notes, setNotes] = useState([]);
+
 	function handleTagSelection(tagName) {
-		if (tagName === "all") {
-			setSelectedTags([]);
+		const alreadySelected = selectedTags.includes(tagName);
+
+		if (alreadySelected) {
+			const filteredTags = selectedTags.filter((tag) => tag !== tagName);
+			setSelectedTags(filteredTags);
 		} else {
-			setSelectedTags((prev) =>
-				prev.includes(tagName)
-					? prev.filter((tag) => tag !== tagName)
-					: [...prev, tagName]
-			);
+			setSelectedTags((prevState) => [...prevState, tagName]);
 		}
 	}
 
@@ -34,6 +37,18 @@ export function Home() {
 
 		fetchTags();
 	}, []);
+
+	useEffect(() => {
+		async function fetchNotes() {
+			const response = await api.get(
+				`/notes?title=${search}&tags=${selectedTags}`,
+			);
+
+			setNotes(response.data);
+		}
+
+		fetchNotes();
+	}, [selectedTags, search]);
 
 	return (
 		<Container>
@@ -64,20 +79,18 @@ export function Home() {
 			</Menu>
 
 			<Search>
-				<Input placeholder="Pesquisar pelo título" icon={FiSearch} />
+				<Input
+					onChange={(e) => setSearch(e.target.value)}
+					placeholder="Pesquisar pelo título"
+					icon={FiSearch}
+				/>
 			</Search>
 
 			<Content>
 				<Section title="Minhas Notas">
-					<Note
-						data={{
-							title: "React",
-							tags: [
-								{ id: 1, name: "react" },
-								{ id: 2, name: "js" },
-							],
-						}}
-					/>
+					{notes.map((note) => (
+						<Note key={String(note.id)} data={note} />
+					))}
 				</Section>
 			</Content>
 
@@ -88,3 +101,9 @@ export function Home() {
 		</Container>
 	);
 }
+
+<Note
+	data={{
+		title: "React",
+	}}
+/>;
