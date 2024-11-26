@@ -10,6 +10,8 @@ export const Container = styled.div`
     padding: 22px;
     margin-bottom: 16px;
 
+    cursor: pointer;
+
     > h1 {
         flex: 1;
         text-align: left;
@@ -22,5 +24,9 @@ export const Container = styled.div`
         width: 100%;
         display: flex;
         margin-top: 24px;
+    }
+
+    &:hover {
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900 };
     }
 `
