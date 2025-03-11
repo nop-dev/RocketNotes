@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./src/server.js",
     "dev": "nodemon ./src/server.js",
-    "migrate": "knex migrate:latest"
+    "migrate": "knex migrate:latest",
+    "test": "jest"
   },
   "author": "nop-dev",
   "license": "ISC",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.0"
   }
 }
