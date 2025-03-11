@@ -19,7 +19,7 @@ class UserRepository {
 			[name, email, password],
 		);
 
-		return { id: userId };
+		return console.log("Cadastro concluído...");
 	}
 }
 
