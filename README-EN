@@ -1,0 +1,105 @@
+# Rocketnotes :rocket:
+
+This full-stack project combines concepts and functionalities developed in previous projects, integrating a robust API and an intuitive front end. By leveraging Node.js, React, SQLite, and other technologies, this application was designed to provide a complete user experience.
+
+---
+
+## 💻 Project
+
+This repository contains a full application, including an API (back end) and a web interface (front end). The main goal of the project is to organize notes and tasks, providing functionalities for creating, editing, and deleting notes efficiently.
+
+---
+
+## 🚀 Technologies Used
+
+**Back end:**
+- Node.js
+- Express
+- SQLite
+- Knex.js
+- bcrypt.js
+- JWT (JSON Web Token)
+- Multer
+- Cors
+
+**Front end:**
+- ReactJS
+- Vite
+- React Router DOM
+- Styled Components
+- Axios
+- React Icons
+
+**Development Tools:**
+- Nodemon
+- Biome.js
+- Eslint
+
+---
+
+## 🔖 Features
+
+**Front end:**
+- User-friendly and responsive interface
+- Dynamic navigation using React Router DOM
+- Forms for creating, editing, and deleting notes
+- Data storage and display, fetched via API
+
+**Back end:**
+- Authentication system using JWT tokens
+- Create, read, update, and delete notes, tags, and links
+- User management with encrypted passwords
+- File uploads using Multer
+- CORS support for front-end integration
+
+---
+
+## 💾 Setup and Usage
+
+Follow these steps to set up the project locally:
+
+### Back end:
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/nop-dev/RocketNotes
+    cd api
+    ```
+2. **Install dependencies**:
+    ```bash
+    npm install
+    ```
+3. **Run migrations**:
+    ```bash
+    npm run migrate
+    ```
+4. **Start the server**:
+    ```bash
+    npm run dev
+    ```
+5. **Access the API**: `http://localhost:3333`
+
+### Front end:
+1. **Navigate to the front-end directory**:
+    ```bash
+    cd web
+    ```
+2. **Install dependencies**:
+    ```bash
+    npm install
+    ```
+3. **Start the development server**:
+    ```bash
+    npm run dev
+    ```
+4. **Access the application**: `http://localhost:3000`
+
+---
+
+> This project was developed as part of the studies on the [Rocketseat](https://www.rocketseat.com.br/) platform, aiming to consolidate knowledge in full-stack web development, including modern technologies and best practices. The application integrates concepts presented at different levels of the Explorer and Ignite tracks, providing a hands-on learning experience. 🚀
+
+---
+
+| Nop-Dev, 2024 :rocket: |
+| --- |
+
+Leave a ⭐️ on this repository if you liked the project! Your support is very valuable to me! 🚀
